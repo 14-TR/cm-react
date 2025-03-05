@@ -19,7 +19,7 @@ const Header = () => {
       }}
     >
       <h1 style={{ margin: 0, fontSize: "1.2rem" }}>
-        Conflict Data Visualization Application | Designed by TR
+        ConflictIQ | Designed by TR
       </h1>
       {/* Uncomment this if you have an InfoButton component */}
       {/* <InfoButton /> */}

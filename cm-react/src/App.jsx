@@ -1,14 +1,16 @@
 import React from "react";
-import MapView from "./components/map-view";
+import DeckMap from "./components/deck-map";
 import Header from "./components/header";
+import SearchBar from "./components/search-bar"; // ✅ Ensure this import exists
 
 function App() {
   return (
     <>
       <Header />
-      <div style={{ height: "100vh", width: "100vw" }}>
-        <MapView />
-      </div>
+      <main style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: "column" }}>
+        <SearchBar onQuerySubmit={() => {}} /> {/* ✅ Now visible */}
+        <DeckMap />
+      </main>
     </>
   );
 }
