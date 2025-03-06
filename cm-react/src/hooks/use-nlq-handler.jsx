@@ -1,28 +1,37 @@
 import { useState } from "react";
 
-const API_URL = "http://127.0.0.1:8000/nlq"; // FastAPI NLQ endpoint
+// Adjust to match your local FastAPI server
+const NLQ_API_URL = "http://127.0.0.1:8000/nlq";
 
 export const useNlqHandler = () => {
   const [nlqResults, setNlqResults] = useState([]);
   const [nlqLoading, setNlqLoading] = useState(false);
   const [nlqError, setNlqError] = useState(null);
 
-  const fetchNlqResults = async (query) => {
-    setNlqLoading(true);
+  const fetchNlqResults = async (userQuery) => {
+    // reset error/loading for new query
     setNlqError(null);
+    setNlqLoading(true);
 
     try {
-      const response = await fetch(API_URL, {
+      // POST to /nlq with the user's query
+      const response = await fetch(NLQ_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query: userQuery }),
       });
 
-      if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
 
       const data = await response.json();
+      console.log("📡 NLQ Response (parsed data):", data);
+
+      // data should be an array of objects from the DB
       setNlqResults(data);
     } catch (err) {
+      console.error("❌ Error processing NLQ query:", err);
       setNlqError(err.message);
     } finally {
       setNlqLoading(false);
