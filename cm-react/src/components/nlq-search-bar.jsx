@@ -1,3 +1,4 @@
+// nlq-search-bar.jsx
 import React, { useState } from "react";
 
 const NlqSearchBar = ({ onQuerySubmit }) => {
@@ -7,7 +8,7 @@ const NlqSearchBar = ({ onQuerySubmit }) => {
     e.preventDefault();
     if (!query.trim()) return;
     onQuerySubmit(query);
-    setQuery(""); // clear input after submit if desired
+    setQuery(""); // Clear input if desired
   };
 
   return (
@@ -19,7 +20,10 @@ const NlqSearchBar = ({ onQuerySubmit }) => {
         onChange={(e) => setQuery(e.target.value)}
         style={{ flex: 1, padding: "8px", fontSize: "1rem" }}
       />
-      <button type="submit" style={{ padding: "8px 15px", fontSize: "1rem", cursor: "pointer" }}>
+      <button
+        type="submit"
+        style={{ padding: "8px 15px", fontSize: "1rem", cursor: "pointer" }}
+      >
         Search
       </button>
     </form>

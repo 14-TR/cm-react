@@ -1,6 +1,6 @@
 import { AmbientLight, PointLight, LightingEffect } from "@deck.gl/core";
 
-export const MAP_STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json";
+export const MAP_STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
 
 // export const INITIAL_VIEW_STATE = {
 //   longitude: -1.415727,

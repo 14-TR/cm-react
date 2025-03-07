@@ -3,115 +3,143 @@ import DeckGL from "@deck.gl/react";
 import { Map } from "react-map-gl/maplibre";
 import { lightingEffect, INITIAL_VIEW_STATE, MAP_STYLE } from "../utils/map-config";
 
-// Single-fetch hook for your main data
+// Data & NLQ hooks
 import { useFetchEvents } from "../hooks/use-fetch-events";
-// Hook for handling Natural Language Query
 import { useNlqHandler } from "../hooks/use-nlq-handler";
 
-// NLQ input bar
-import SearchBar from "./nlq-search-bar";
+// The Speed Dial that toggles all sub-panels
+import ControlPanelSpeedDial from "./control-panel-speeddial";
 
-// Build layers for the map
+// Helper for building DeckGL layers
 import { createLayers } from "../utils/layer-creator";
 
-const DeckMap = ({ radius = 1000, upperPercentile = 100, coverage = 1 }) => {
-  // 1. Single fetch of all event data
-  const { eventData, loading, error } = useFetchEvents();
+const DeckMap = () => {
+  // 1. Layer control states
+  const [radius, setRadius] = useState(1000);
+  const [coverage, setCoverage] = useState(1.0);
+  const [upperPercentile, setUpperPercentile] = useState(100);
+  const [lowerPercentile, setLowerPercentile] = useState(0);
 
-  // 2. NLQ hook with { nlqResults, fetchNlqResults, nlqLoading, nlqError }
+  // 2. Toggling different layers (optional)
+  const [showBattlesLayer, setShowBattlesLayer] = useState(true);
+  const [showExplosionsLayer, setShowExplosionsLayer] = useState(false);
+  const [showViirsLayer, setShowViirsLayer] = useState(false);
+
+  // 3. Analysis toggles
+  const [brushingEnabled, setBrushingEnabled] = useState(false);
+  const [brushingRadius, setBrushingRadius] = useState(2000);
+  const [showChart, setShowChart] = useState(false);
+
+  // 4. Data fetching & NLQ logic
+  const { eventData, loading, error } = useFetchEvents();
   const { nlqResults, fetchNlqResults, nlqLoading, nlqError } = useNlqHandler();
 
-  // 3. We'll display either default data or NLQ data
+  // 5. Display data for the map + aggregated stats
   const [displayData, setDisplayData] = useState([]);
-  // 4. If the NLQ is just stats, store them here
   const [statsData, setStatsData] = useState([]);
 
+  // Reference to Deck instance, if needed
   const deckRef = useRef(null);
 
+  // Load event data once
   useEffect(() => {
-    console.log("🔥 Default Event Data:", eventData);
-    console.log("🔍 NLQ Results:", nlqResults);
+    if (eventData.length && !displayData.length) {
+      setDisplayData(eventData);
+    }
+  }, [eventData, displayData]);
 
+  // Decide how to handle newly fetched NLQ data
+  useEffect(() => {
     if (nlqResults.length > 0) {
-      // Check if the first item has lat/lon
       const firstRow = nlqResults[0];
-      const hasLatLon = "latitude" in firstRow && "longitude" in firstRow;
-
-      if (hasLatLon) {
-        // The NLQ returned geospatial rows → map them
+      if ("latitude" in firstRow && "longitude" in firstRow) {
+        // It's geospatial
         setDisplayData(nlqResults);
-        setStatsData([]); // clear stats
+        setStatsData([]);
       } else {
-        // The NLQ likely returned aggregated or non-geo data
+        // Aggregated or non-geo
         setDisplayData([]);
-        setStatsData(nlqResults); // store stats or aggregated results
+        setStatsData(nlqResults);
       }
     } else {
-      // No NLQ results, so show default data
+      // No NLQ results, fallback to event data
       setDisplayData(eventData);
       setStatsData([]);
     }
   }, [eventData, nlqResults]);
 
-  // Build layers from whatever is in displayData
+  // Reset function
+  const handleReset = () => {
+    setDisplayData(eventData);
+    setStatsData([]);
+  };
+
+  // Build deck.gl layers
   const layers =
     displayData.length > 0
-      ? createLayers({ eventData: displayData, radius, upperPercentile, coverage })
+      ? createLayers({
+          eventData: displayData,
+          radius,
+          coverage,
+          upperPercentile
+          // Possibly incorporate showBattlesLayer, showExplosionsLayer, etc.
+        })
       : [];
 
-  if (loading) {
-    return <div>Loading data...</div>;
-  }
-  if (error) {
-    return <div>Error loading data: {error}</div>;
-  }
+  // Show loading/error if needed
+  if (loading) return <div>Loading data...</div>;
+  if (error) return <div>Error loading data: {error}</div>;
 
   return (
     <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
-      {/* NLQ Search Bar with absolute position */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50px",
-          left: "10px",
-          zIndex: 999,
-          background: "#ffffff",
-          padding: "8px",
-          borderRadius: "4px",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
-        }}
-      >
-        <SearchBar onQuerySubmit={fetchNlqResults} />
-      </div>
+      {/* 
+        The Speed Dial with multiple sub-panels:
+        - Search & Aggregation
+        - Layer Controls
+        - Analysis
+        - Info 
+      */}
+      <ControlPanelSpeedDial
+        // For SearchAggregationPanel
+        onQuerySubmit={fetchNlqResults}
+        onReset={handleReset}
+        statsData={statsData}
 
-      {/* Show loading / error for NLQ if needed */}
-      {nlqLoading && <div style={{ position: "absolute", top: 120, left: 20 }}>Processing query...</div>}
-      {nlqError && <div style={{ position: "absolute", top: 140, left: 20, color: "red" }}>{nlqError}</div>}
+        // For LayerControlPanel
+        radius={radius}
+        setRadius={setRadius}
+        coverage={coverage}
+        setCoverage={setCoverage}
+        upperPercentile={upperPercentile}
+        setUpperPercentile={setUpperPercentile}
+        lowerPercentile={lowerPercentile}
+        setLowerPercentile={setLowerPercentile}
+        showBattlesLayer={showBattlesLayer}
+        setShowBattlesLayer={setShowBattlesLayer}
+        showExplosionsLayer={showExplosionsLayer}
+        setShowExplosionsLayer={setShowExplosionsLayer}
+        showViirsLayer={showViirsLayer}
+        setShowViirsLayer={setShowViirsLayer}
 
-      {/* If the data is purely stats, show them in a side panel */}
-      {statsData.length > 0 && (
-        <div
-          style={{
-            position: "absolute",
-            top: "150px",
-            left: "20px",
-            zIndex: 999,
-            width: "300px",
-            padding: "10px",
-            backgroundColor: "#f5f5f5",
-            borderRadius: "4px",
-            overflow: "auto",
-            maxHeight: "50vh",
-          }}
-        >
-          <h4>NLQ Aggregated Results</h4>
-          <pre style={{ whiteSpace: "pre-wrap" }}>
-            {JSON.stringify(statsData, null, 2)}
-          </pre>
-        </div>
+        // For AnalysisControlPanel
+        brushingEnabled={brushingEnabled}
+        setBrushingEnabled={setBrushingEnabled}
+        brushingRadius={brushingRadius}
+        setBrushingRadius={setBrushingRadius}
+        showChart={showChart}
+        setShowChart={setShowChart}
+      />
+
+      {/* If the NLQ is processing, show "Processing query..." */}
+      {nlqLoading && (
+        <div style={infoStyles}>Processing query...</div>
+      )}
+      {/* If there's an NLQ error, show it */}
+      {nlqError && (
+        <div style={{ ...infoStyles, color: "red" }}>{nlqError}</div>
       )}
 
-      {/* Deck.gl Map */}
+      {/* The main Deck.gl map */}
       <DeckGL
         ref={deckRef}
         layers={layers}
@@ -123,6 +151,18 @@ const DeckMap = ({ radius = 1000, upperPercentile = 100, coverage = 1 }) => {
       </DeckGL>
     </div>
   );
+};
+
+/* ---------- Inline Styles ---------- */
+const infoStyles = {
+  position: "absolute",
+  top: "80px",
+  left: "20px",
+  color: "#fff",
+  background: "rgba(0,0,0,0.6)",
+  padding: "4px 8px",
+  borderRadius: "4px",
+  zIndex: 999,
 };
 
 export default DeckMap;
