@@ -10,11 +10,13 @@ import LayersIcon from "@mui/icons-material/Layers";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import ElipsesIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
+import CalculateIcon from "@mui/icons-material/Calculate";
 
 // Sub-panels
 import SearchAggregationPanel from "./search-aggregation-panel";
-import LayerControlPanel from "./layer-control-panel"; // If you're using the old control-panel, rename it
+import LayerControlPanel from "./layer-control-panel"; 
 import AnalysisControlPanel from "./analysis-control-panel"; // Placeholder example
+import CentralTendencyPanel from "./central-tendency-panel";
 import InfoPage from "./info-page"; // Placeholder example
 
 const headerHeight = 64;
@@ -24,6 +26,7 @@ const actions = [
   { icon: <SearchIcon />, name: "Search & Aggregation", action: "toggleSearchAgg" },
   { icon: <LayersIcon />, name: "Layer Controls", action: "toggleLayerMenu" },
   { icon: <InsertChartIcon />, name: "Analysis Controls", action: "toggleAnalysisMenu" },
+  { icon: <CalculateIcon />, name: "Central Tendency", action: "toggleCentralTendency" },
   { icon: <ElipsesIcon />, name: "Info Page", action: "toggleInfoPage" }
 ];
 
@@ -47,7 +50,7 @@ export default function ControlPanelSpeedDial({
   showBattlesLayer,
   setShowBattlesLayer,
   showExplosionsLayer,
-//   setShowExplosionsLayer,
+  // setShowExplosionsLayer,
   showViirsLayer,
   setShowViirsLayer,
 
@@ -57,7 +60,10 @@ export default function ControlPanelSpeedDial({
   brushingRadius,
   setBrushingRadius,
   showChart,
-  setShowChart
+  setShowChart,
+
+  // NEW: pass the data currently displayed on the map
+  displayData
 }) {
   const [activePanel, setActivePanel] = useState(null);
 
@@ -121,11 +127,10 @@ export default function ControlPanelSpeedDial({
           setUpperPercentile={setUpperPercentile}
           lowerPercentile={lowerPercentile}
           setLowerPercentile={setLowerPercentile}
-
           showBattlesLayer={showBattlesLayer}
           setShowBattlesLayer={setShowBattlesLayer}
           showExplosionsLayer={showExplosionsLayer}
-        //   setShowExplosionsLayer={setExplosionsLayer}
+          // setShowExplosionsLayer={setShowExplosionsLayer}
           showViirsLayer={showViirsLayer}
           setShowViirsLayer={setShowViirsLayer}
         />
@@ -146,9 +151,23 @@ export default function ControlPanelSpeedDial({
           setBrushingEnabled={setBrushingEnabled}
           brushingRadius={brushingRadius}
           setBrushingRadius={setBrushingRadius}
+          displayData={displayData}
           showChart={showChart}
           setShowChart={setShowChart}
         />
+      </Box>
+
+      {/* ---------- Sub-Panel: Central Tendency ---------- */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 80,
+          left: 80,
+          zIndex: activePanel === "toggleCentralTendency" ? 1000 : "auto",
+          display: activePanel === "toggleCentralTendency" ? "block" : "none",
+        }}
+      >
+        <CentralTendencyPanel displayData={displayData} />
       </Box>
 
       {/* ---------- Sub-Panel: Info Page ---------- */}

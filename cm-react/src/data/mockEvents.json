@@ -1,0 +1,928 @@
+[                                          
+  {                                        
+    "event_id": 1,
+    "event_type": "explosion",
+    "latitude": 48.2505,
+    "longitude": 37.8981,
+    "event_date": "2023-07-29",
+    "notes": "Mock data #1",
+    "fatalities": 5
+  },
+  {
+    "event_id": 2,
+    "event_type": "viirs",
+    "latitude": 47.2762,
+    "longitude": 26.9761,
+    "event_date": "2023-11-08",
+    "notes": "Mock data #2",
+    "viirs_id": "viirs_002",
+    "frp": 5.7
+  },
+  {
+    "event_id": 3,
+    "event_type": "explosion",
+    "latitude": 50.0305,
+    "longitude": 36.4786,
+    "event_date": "2023-11-12",
+    "notes": "Mock data #3",
+    "fatalities": 5
+  },
+  {
+    "event_id": 4,
+    "event_type": "viirs",
+    "latitude": 46.2736,
+    "longitude": 39.9611,
+    "event_date": "2023-09-02",
+    "notes": "Mock data #4",
+    "viirs_id": "viirs_004",
+    "frp": 25.0
+  },
+  {
+    "event_id": 5,
+    "event_type": "viirs",
+    "latitude": 45.0412,
+    "longitude": 23.0264,
+    "event_date": "2023-06-08",
+    "notes": "Mock data #5",
+    "viirs_id": "viirs_005",
+    "frp": 11.0
+  },
+  {
+    "event_id": 6,
+    "event_type": "explosion",
+    "latitude": 45.9167,
+    "longitude": 27.9122,
+    "event_date": "2023-07-31",
+    "notes": "Mock data #6",
+    "fatalities": 5
+  },
+  {
+    "event_id": 7,
+    "event_type": "battle",
+    "latitude": 44.5904,
+    "longitude": 38.6367,
+    "event_date": "2023-04-20",
+    "notes": "Mock data #7",
+    "fatalities": 4
+  },
+  {
+    "event_id": 8,
+    "event_type": "explosion",
+    "latitude": 46.0188,
+    "longitude": 25.688,
+    "event_date": "2023-08-20",
+    "notes": "Mock data #8",
+    "fatalities": 10
+  },
+  {
+    "event_id": 9,
+    "event_type": "explosion",
+    "latitude": 46.7491,
+    "longitude": 28.7064,
+    "event_date": "2023-09-05",
+    "notes": "Mock data #9",
+    "fatalities": 3
+  },
+  {
+    "event_id": 10,
+    "event_type": "explosion",
+    "latitude": 51.2427,
+    "longitude": 30.911,
+    "event_date": "2023-01-31",
+    "notes": "Mock data #10",
+    "fatalities": 2
+  },
+  {
+    "event_id": 11,
+    "event_type": "explosion",
+    "latitude": 51.3238,
+    "longitude": 32.4862,
+    "event_date": "2023-10-07",
+    "notes": "Mock data #11",
+    "fatalities": 7
+  },
+  {
+    "event_id": 12,
+    "event_type": "battle",
+    "latitude": 50.2409,
+    "longitude": 40.1311,
+    "event_date": "2023-05-25",
+    "notes": "Mock data #12",
+    "fatalities": 0
+  },
+  {
+    "event_id": 13,
+    "event_type": "battle",
+    "latitude": 50.5779,
+    "longitude": 23.9808,
+    "event_date": "2023-11-10",
+    "notes": "Mock data #13",
+    "fatalities": 0
+  },
+  {
+    "event_id": 14,
+    "event_type": "viirs",
+    "latitude": 50.0569,
+    "longitude": 34.7665,
+    "event_date": "2023-02-04",
+    "notes": "Mock data #14",
+    "viirs_id": "viirs_014",
+    "frp": 23.3
+  },
+  {
+    "event_id": 15,
+    "event_type": "explosion",
+    "latitude": 49.4701,
+    "longitude": 25.2054,
+    "event_date": "2023-11-27",
+    "notes": "Mock data #15",
+    "fatalities": 6
+  },
+  {
+    "event_id": 16,
+    "event_type": "battle",
+    "latitude": 49.0325,
+    "longitude": 29.6519,
+    "event_date": "2023-10-10",
+    "notes": "Mock data #16",
+    "fatalities": 2
+  },
+  {
+    "event_id": 17,
+    "event_type": "viirs",
+    "latitude": 49.5435,
+    "longitude": 33.7887,
+    "event_date": "2023-01-13",
+    "notes": "Mock data #17",
+    "viirs_id": "viirs_017",
+    "frp": 7.3
+  },
+  {
+    "event_id": 18,
+    "event_type": "explosion",
+    "latitude": 50.9016,
+    "longitude": 28.4982,
+    "event_date": "2023-12-20",
+    "notes": "Mock data #18",
+    "fatalities": 5
+  },
+  {
+    "event_id": 19,
+    "event_type": "explosion",
+    "latitude": 45.7103,
+    "longitude": 29.703,
+    "event_date": "2023-11-25",
+    "notes": "Mock data #19",
+    "fatalities": 6
+  },
+  {
+    "event_id": 20,
+    "event_type": "battle",
+    "latitude": 45.1713,
+    "longitude": 27.3059,
+    "event_date": "2023-02-10",
+    "notes": "Mock data #20",
+    "fatalities": 1
+  },
+  {
+    "event_id": 21,
+    "event_type": "viirs",
+    "latitude": 45.0524,
+    "longitude": 26.7784,
+    "event_date": "2023-11-25",
+    "notes": "Mock data #21",
+    "viirs_id": "viirs_021",
+    "frp": 14.0
+  },
+  {
+    "event_id": 22,
+    "event_type": "battle",
+    "latitude": 51.2407,
+    "longitude": 37.1404,
+    "event_date": "2023-04-17",
+    "notes": "Mock data #22",
+    "fatalities": 5
+  },
+  {
+    "event_id": 23,
+    "event_type": "explosion",
+    "latitude": 48.0992,
+    "longitude": 32.7358,
+    "event_date": "2023-06-24",
+    "notes": "Mock data #23",
+    "fatalities": 4
+  },
+  {
+    "event_id": 24,
+    "event_type": "battle",
+    "latitude": 47.58,
+    "longitude": 30.0534,
+    "event_date": "2023-07-30",
+    "notes": "Mock data #24",
+    "fatalities": 8
+  },
+  {
+    "event_id": 25,
+    "event_type": "viirs",
+    "latitude": 52.373,
+    "longitude": 30.6895,
+    "event_date": "2023-06-19",
+    "notes": "Mock data #25",
+    "viirs_id": "viirs_025",
+    "frp": 29.0
+  },
+  {
+    "event_id": 26,
+    "event_type": "viirs",
+    "latitude": 51.0229,
+    "longitude": 36.1777,
+    "event_date": "2023-04-18",
+    "notes": "Mock data #26",
+    "viirs_id": "viirs_026",
+    "frp": 2.4
+  },
+  {
+    "event_id": 27,
+    "event_type": "explosion",
+    "latitude": 51.8831,
+    "longitude": 38.6386,
+    "event_date": "2023-05-23",
+    "notes": "Mock data #27",
+    "fatalities": 3
+  },
+  {
+    "event_id": 28,
+    "event_type": "viirs",
+    "latitude": 46.7992,
+    "longitude": 32.8476,
+    "event_date": "2023-07-17",
+    "notes": "Mock data #28",
+    "viirs_id": "viirs_028",
+    "frp": 20.7
+  },
+  {
+    "event_id": 29,
+    "event_type": "battle",
+    "latitude": 50.1471,
+    "longitude": 37.6313,
+    "event_date": "2023-11-29",
+    "notes": "Mock data #29",
+    "fatalities": 5
+  },
+  {
+    "event_id": 30,
+    "event_type": "battle",
+    "latitude": 48.9962,
+    "longitude": 39.6035,
+    "event_date": "2023-03-29",
+    "notes": "Mock data #30",
+    "fatalities": 3
+  },
+  {
+    "event_id": 31,
+    "event_type": "battle",
+    "latitude": 47.7272,
+    "longitude": 38.9382,
+    "event_date": "2023-10-21",
+    "notes": "Mock data #31",
+    "fatalities": 5
+  },
+  {
+    "event_id": 32,
+    "event_type": "viirs",
+    "latitude": 50.1539,
+    "longitude": 39.4032,
+    "event_date": "2023-02-03",
+    "notes": "Mock data #32",
+    "viirs_id": "viirs_032",
+    "frp": 3.0
+  },
+  {
+    "event_id": 33,
+    "event_type": "battle",
+    "latitude": 52.2767,
+    "longitude": 32.4458,
+    "event_date": "2023-08-11",
+    "notes": "Mock data #33",
+    "fatalities": 0
+  },
+  {
+    "event_id": 34,
+    "event_type": "battle",
+    "latitude": 50.21,
+    "longitude": 33.4349,
+    "event_date": "2023-03-29",
+    "notes": "Mock data #34",
+    "fatalities": 7
+  },
+  {
+    "event_id": 35,
+    "event_type": "explosion",
+    "latitude": 47.3633,
+    "longitude": 38.7203,
+    "event_date": "2023-10-11",
+    "notes": "Mock data #35",
+    "fatalities": 0
+  },
+  {
+    "event_id": 36,
+    "event_type": "battle",
+    "latitude": 50.1684,
+    "longitude": 32.9211,
+    "event_date": "2023-07-20",
+    "notes": "Mock data #36",
+    "fatalities": 6
+  },
+  {
+    "event_id": 37,
+    "event_type": "battle",
+    "latitude": 44.954,
+    "longitude": 36.2323,
+    "event_date": "2023-05-09",
+    "notes": "Mock data #37",
+    "fatalities": 2
+  },
+  {
+    "event_id": 38,
+    "event_type": "explosion",
+    "latitude": 51.0892,
+    "longitude": 39.8761,
+    "event_date": "2023-04-23",
+    "notes": "Mock data #38",
+    "fatalities": 8
+  },
+  {
+    "event_id": 39,
+    "event_type": "battle",
+    "latitude": 45.9998,
+    "longitude": 28.8189,
+    "event_date": "2023-07-19",
+    "notes": "Mock data #39",
+    "fatalities": 0
+  },
+  {
+    "event_id": 40,
+    "event_type": "battle",
+    "latitude": 52.1274,
+    "longitude": 37.3802,
+    "event_date": "2023-10-07",
+    "notes": "Mock data #40",
+    "fatalities": 4
+  },
+  {
+    "event_id": 41,
+    "event_type": "battle",
+    "latitude": 49.0739,
+    "longitude": 25.4386,
+    "event_date": "2023-12-18",
+    "notes": "Mock data #41",
+    "fatalities": 10
+  },
+  {
+    "event_id": 42,
+    "event_type": "viirs",
+    "latitude": 45.7127,
+    "longitude": 35.7125,
+    "event_date": "2023-10-03",
+    "notes": "Mock data #42",
+    "viirs_id": "viirs_042",
+    "frp": 27.4
+  },
+  {
+    "event_id": 43,
+    "event_type": "explosion",
+    "latitude": 47.8795,
+    "longitude": 37.0443,
+    "event_date": "2023-11-05",
+    "notes": "Mock data #43",
+    "fatalities": 7
+  },
+  {
+    "event_id": 44,
+    "event_type": "battle",
+    "latitude": 49.3751,
+    "longitude": 36.5531,
+    "event_date": "2023-11-24",
+    "notes": "Mock data #44",
+    "fatalities": 9
+  },
+  {
+    "event_id": 45,
+    "event_type": "viirs",
+    "latitude": 48.6307,
+    "longitude": 30.2555,
+    "event_date": "2023-05-07",
+    "notes": "Mock data #45",
+    "viirs_id": "viirs_045",
+    "frp": 28.1
+  },
+  {
+    "event_id": 46,
+    "event_type": "battle",
+    "latitude": 44.6488,
+    "longitude": 28.039,
+    "event_date": "2023-05-11",
+    "notes": "Mock data #46",
+    "fatalities": 3
+  },
+  {
+    "event_id": 47,
+    "event_type": "explosion",
+    "latitude": 50.4059,
+    "longitude": 37.0437,
+    "event_date": "2023-04-19",
+    "notes": "Mock data #47",
+    "fatalities": 9
+  },
+  {
+    "event_id": 48,
+    "event_type": "explosion",
+    "latitude": 50.5634,
+    "longitude": 33.273,
+    "event_date": "2023-05-21",
+    "notes": "Mock data #48",
+    "fatalities": 9
+  },
+  {
+    "event_id": 49,
+    "event_type": "explosion",
+    "latitude": 45.2068,
+    "longitude": 31.5991,
+    "event_date": "2023-03-18",
+    "notes": "Mock data #49",
+    "fatalities": 10
+  },
+  {
+    "event_id": 50,
+    "event_type": "viirs",
+    "latitude": 50.752,
+    "longitude": 22.9992,
+    "event_date": "2023-05-24",
+    "notes": "Mock data #50",
+    "viirs_id": "viirs_050",
+    "frp": 14.7
+  },
+  {
+    "event_id": 51,
+    "event_type": "viirs",
+    "latitude": 49.4091,
+    "longitude": 22.8097,
+    "event_date": "2023-05-24",
+    "notes": "Mock data #51",
+    "viirs_id": "viirs_051",
+    "frp": 6.4
+  },
+  {
+    "event_id": 52,
+    "event_type": "explosion",
+    "latitude": 52.0097,
+    "longitude": 26.8283,
+    "event_date": "2023-06-08",
+    "notes": "Mock data #52",
+    "fatalities": 4
+  },
+  {
+    "event_id": 53,
+    "event_type": "explosion",
+    "latitude": 46.5409,
+    "longitude": 31.7468,
+    "event_date": "2023-06-01",
+    "notes": "Mock data #53",
+    "fatalities": 0
+  },
+  {
+    "event_id": 54,
+    "event_type": "viirs",
+    "latitude": 49.485,
+    "longitude": 25.2823,
+    "event_date": "2023-10-24",
+    "notes": "Mock data #54",
+    "viirs_id": "viirs_054",
+    "frp": 27.5
+  },
+  {
+    "event_id": 55,
+    "event_type": "battle",
+    "latitude": 46.977,
+    "longitude": 31.9384,
+    "event_date": "2023-11-05",
+    "notes": "Mock data #55",
+    "fatalities": 10
+  },
+  {
+    "event_id": 56,
+    "event_type": "explosion",
+    "latitude": 48.0572,
+    "longitude": 25.9425,
+    "event_date": "2023-01-13",
+    "notes": "Mock data #56",
+    "fatalities": 6
+  },
+  {
+    "event_id": 57,
+    "event_type": "viirs",
+    "latitude": 51.8013,
+    "longitude": 23.4331,
+    "event_date": "2023-05-23",
+    "notes": "Mock data #57",
+    "viirs_id": "viirs_057",
+    "frp": 8.2
+  },
+  {
+    "event_id": 58,
+    "event_type": "explosion",
+    "latitude": 47.5734,
+    "longitude": 25.4933,
+    "event_date": "2023-11-06",
+    "notes": "Mock data #58",
+    "fatalities": 1
+  },
+  {
+    "event_id": 59,
+    "event_type": "battle",
+    "latitude": 49.0928,
+    "longitude": 37.6218,
+    "event_date": "2023-01-07",
+    "notes": "Mock data #59",
+    "fatalities": 10
+  },
+  {
+    "event_id": 60,
+    "event_type": "battle",
+    "latitude": 46.9855,
+    "longitude": 22.3263,
+    "event_date": "2023-01-07",
+    "notes": "Mock data #60",
+    "fatalities": 1
+  },
+  {
+    "event_id": 61,
+    "event_type": "viirs",
+    "latitude": 48.85,
+    "longitude": 30.4374,
+    "event_date": "2023-02-06",
+    "notes": "Mock data #61",
+    "viirs_id": "viirs_061",
+    "frp": 16.2
+  },
+  {
+    "event_id": 62,
+    "event_type": "battle",
+    "latitude": 49.2991,
+    "longitude": 38.1731,
+    "event_date": "2023-05-14",
+    "notes": "Mock data #62",
+    "fatalities": 9
+  },
+  {
+    "event_id": 63,
+    "event_type": "explosion",
+    "latitude": 49.6639,
+    "longitude": 34.6944,
+    "event_date": "2023-02-03",
+    "notes": "Mock data #63",
+    "fatalities": 5
+  },
+  {
+    "event_id": 64,
+    "event_type": "battle",
+    "latitude": 47.1884,
+    "longitude": 37.897,
+    "event_date": "2023-11-22",
+    "notes": "Mock data #64",
+    "fatalities": 7
+  },
+  {
+    "event_id": 65,
+    "event_type": "explosion",
+    "latitude": 48.8786,
+    "longitude": 23.2188,
+    "event_date": "2023-06-23",
+    "notes": "Mock data #65",
+    "fatalities": 9
+  },
+  {
+    "event_id": 66,
+    "event_type": "viirs",
+    "latitude": 52.3125,
+    "longitude": 22.6078,
+    "event_date": "2023-05-20",
+    "notes": "Mock data #66",
+    "viirs_id": "viirs_066",
+    "frp": 14.9
+  },
+  {
+    "event_id": 67,
+    "event_type": "battle",
+    "latitude": 46.1008,
+    "longitude": 27.2378,
+    "event_date": "2023-02-04",
+    "notes": "Mock data #67",
+    "fatalities": 2
+  },
+  {
+    "event_id": 68,
+    "event_type": "explosion",
+    "latitude": 49.5402,
+    "longitude": 34.8912,
+    "event_date": "2023-09-27",
+    "notes": "Mock data #68",
+    "fatalities": 6
+  },
+  {
+    "event_id": 69,
+    "event_type": "explosion",
+    "latitude": 44.7616,
+    "longitude": 29.439,
+    "event_date": "2023-02-08",
+    "notes": "Mock data #69",
+    "fatalities": 4
+  },
+  {
+    "event_id": 70,
+    "event_type": "battle",
+    "latitude": 52.1319,
+    "longitude": 35.5694,
+    "event_date": "2023-09-13",
+    "notes": "Mock data #70",
+    "fatalities": 3
+  },
+  {
+    "event_id": 71,
+    "event_type": "explosion",
+    "latitude": 47.4398,
+    "longitude": 35.2007,
+    "event_date": "2023-02-11",
+    "notes": "Mock data #71",
+    "fatalities": 7
+  },
+  {
+    "event_id": 72,
+    "event_type": "battle",
+    "latitude": 49.5299,
+    "longitude": 38.618,
+    "event_date": "2023-04-15",
+    "notes": "Mock data #72",
+    "fatalities": 4
+  },
+  {
+    "event_id": 73,
+    "event_type": "viirs",
+    "latitude": 45.2874,
+    "longitude": 23.0952,
+    "event_date": "2023-09-05",
+    "notes": "Mock data #73",
+    "viirs_id": "viirs_073",
+    "frp": 28.4
+  },
+  {
+    "event_id": 74,
+    "event_type": "battle",
+    "latitude": 45.08,
+    "longitude": 23.3953,
+    "event_date": "2023-06-17",
+    "notes": "Mock data #74",
+    "fatalities": 7
+  },
+  {
+    "event_id": 75,
+    "event_type": "explosion",
+    "latitude": 48.185,
+    "longitude": 37.0734,
+    "event_date": "2023-07-31",
+    "notes": "Mock data #75",
+    "fatalities": 4
+  },
+  {
+    "event_id": 76,
+    "event_type": "explosion",
+    "latitude": 48.1706,
+    "longitude": 34.2737,
+    "event_date": "2023-03-13",
+    "notes": "Mock data #76",
+    "fatalities": 10
+  },
+  {
+    "event_id": 77,
+    "event_type": "viirs",
+    "latitude": 49.8845,
+    "longitude": 35.7073,
+    "event_date": "2023-04-12",
+    "notes": "Mock data #77",
+    "viirs_id": "viirs_077",
+    "frp": 5.7
+  },
+  {
+    "event_id": 78,
+    "event_type": "battle",
+    "latitude": 48.7597,
+    "longitude": 23.9994,
+    "event_date": "2023-11-09",
+    "notes": "Mock data #78",
+    "fatalities": 6
+  },
+  {
+    "event_id": 79,
+    "event_type": "explosion",
+    "latitude": 47.3988,
+    "longitude": 33.484,
+    "event_date": "2023-01-09",
+    "notes": "Mock data #79",
+    "fatalities": 7
+  },
+  {
+    "event_id": 80,
+    "event_type": "battle",
+    "latitude": 52.3081,
+    "longitude": 24.5847,
+    "event_date": "2023-04-25",
+    "notes": "Mock data #80",
+    "fatalities": 3
+  },
+  {
+    "event_id": 81,
+    "event_type": "battle",
+    "latitude": 50.4754,
+    "longitude": 26.1869,
+    "event_date": "2023-06-02",
+    "notes": "Mock data #81",
+    "fatalities": 4
+  },
+  {
+    "event_id": 82,
+    "event_type": "battle",
+    "latitude": 48.6479,
+    "longitude": 23.2388,
+    "event_date": "2023-07-26",
+    "notes": "Mock data #82",
+    "fatalities": 8
+  },
+  {
+    "event_id": 83,
+    "event_type": "explosion",
+    "latitude": 50.4823,
+    "longitude": 29.9398,
+    "event_date": "2023-09-04",
+    "notes": "Mock data #83",
+    "fatalities": 2
+  },
+  {
+    "event_id": 84,
+    "event_type": "battle",
+    "latitude": 46.7536,
+    "longitude": 22.925,
+    "event_date": "2023-01-27",
+    "notes": "Mock data #84",
+    "fatalities": 2
+  },
+  {
+    "event_id": 85,
+    "event_type": "viirs",
+    "latitude": 47.2661,
+    "longitude": 23.9874,
+    "event_date": "2023-10-05",
+    "notes": "Mock data #85",
+    "viirs_id": "viirs_085",
+    "frp": 23.1
+  },
+  {
+    "event_id": 86,
+    "event_type": "battle",
+    "latitude": 47.2571,
+    "longitude": 26.6562,
+    "event_date": "2023-01-06",
+    "notes": "Mock data #86",
+    "fatalities": 2
+  },
+  {
+    "event_id": 87,
+    "event_type": "viirs",
+    "latitude": 47.1585,
+    "longitude": 35.8707,
+    "event_date": "2023-08-30",
+    "notes": "Mock data #87",
+    "viirs_id": "viirs_087",
+    "frp": 22.7
+  },
+  {
+    "event_id": 88,
+    "event_type": "explosion",
+    "latitude": 45.1263,
+    "longitude": 26.0522,
+    "event_date": "2023-09-30",
+    "notes": "Mock data #88",
+    "fatalities": 10
+  },
+  {
+    "event_id": 89,
+    "event_type": "viirs",
+    "latitude": 46.9273,
+    "longitude": 31.4378,
+    "event_date": "2023-01-14",
+    "notes": "Mock data #89",
+    "viirs_id": "viirs_089",
+    "frp": 2.8
+  },
+  {
+    "event_id": 90,
+    "event_type": "viirs",
+    "latitude": 50.5888,
+    "longitude": 32.2818,
+    "event_date": "2023-05-19",
+    "notes": "Mock data #90",
+    "viirs_id": "viirs_090",
+    "frp": 9.3
+  },
+  {
+    "event_id": 91,
+    "event_type": "battle",
+    "latitude": 48.7672,
+    "longitude": 37.2046,
+    "event_date": "2023-11-18",
+    "notes": "Mock data #91",
+    "fatalities": 2
+  },
+  {
+    "event_id": 92,
+    "event_type": "explosion",
+    "latitude": 46.6315,
+    "longitude": 36.8997,
+    "event_date": "2023-04-21",
+    "notes": "Mock data #92",
+    "fatalities": 9
+  },
+  {
+    "event_id": 93,
+    "event_type": "explosion",
+    "latitude": 47.3673,
+    "longitude": 30.4764,
+    "event_date": "2023-12-20",
+    "notes": "Mock data #93",
+    "fatalities": 6
+  },
+  {
+    "event_id": 94,
+    "event_type": "viirs",
+    "latitude": 47.6731,
+    "longitude": 32.8212,
+    "event_date": "2023-06-28",
+    "notes": "Mock data #94",
+    "viirs_id": "viirs_094",
+    "frp": 19.6
+  },
+  {
+    "event_id": 95,
+    "event_type": "viirs",
+    "latitude": 49.8749,
+    "longitude": 24.4389,
+    "event_date": "2023-08-02",
+    "notes": "Mock data #95",
+    "viirs_id": "viirs_095",
+    "frp": 16.6
+  },
+  {
+    "event_id": 96,
+    "event_type": "explosion",
+    "latitude": 49.2486,
+    "longitude": 30.9393,
+    "event_date": "2023-05-22",
+    "notes": "Mock data #96",
+    "fatalities": 7
+  },
+  {
+    "event_id": 97,
+    "event_type": "battle",
+    "latitude": 48.9112,
+    "longitude": 29.605,
+    "event_date": "2023-03-12",
+    "notes": "Mock data #97",
+    "fatalities": 9
+  },
+  {
+    "event_id": 98,
+    "event_type": "explosion",
+    "latitude": 50.8848,
+    "longitude": 32.1476,
+    "event_date": "2023-01-11",
+    "notes": "Mock data #98",
+    "fatalities": 10
+  },
+  {
+    "event_id": 99,
+    "event_type": "battle",
+    "latitude": 45.0323,
+    "longitude": 24.4981,
+    "event_date": "2023-07-03",
+    "notes": "Mock data #99",
+    "fatalities": 1
+  },
+  {
+    "event_id": 100,
+    "event_type": "explosion",
+    "latitude": 49.227,
+    "longitude": 35.2528,
+    "event_date": "2023-01-26",
+    "notes": "Mock data #100",
+    "fatalities": 0
+  }
+]

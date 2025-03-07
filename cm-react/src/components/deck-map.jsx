@@ -128,6 +128,10 @@ const DeckMap = () => {
         setBrushingRadius={setBrushingRadius}
         showChart={showChart}
         setShowChart={setShowChart}
+        
+
+        // For CentralTendencyPanel
+        displayData={displayData}
       />
 
       {/* If the NLQ is processing, show "Processing query..." */}

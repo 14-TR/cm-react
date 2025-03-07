@@ -1,31 +1,53 @@
+// use-fetch-events.js
 import { useState, useEffect } from "react";
 
-const API_URL = "http://127.0.0.1:8000/battles"; // ✅ Fetches ALL data in one go
+// Toggle this to switch between mock data and real data:
+const USE_MOCK = true;
+
+// If you want to fetch from an actual local file in public/ folder, you can use:
+// const MOCK_API_URL = "/mockEvents.json";
+
+// Or  import directly from a JS/JSON file in src/data
+import mockEvents from "../data/mockEvents.json";
+
+// API endpoint (when not using mocks):
+const REAL_API_URL = "http://127.0.0.1:8000/battles";
 
 export const useFetchEvents = () => {
   const [eventData, setEventData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data once on component mount
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        console.log(`📡 Fetching all data from: ${API_URL}`);
+        let data;
 
-        const response = await fetch(API_URL, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+        if (USE_MOCK) {
+          console.log("🧪 Using mock data...");
 
-        if (!response.ok) {
-          throw new Error(`HTTP Error! Status: ${response.status}`);
+          // Option A) Direct import if you have a local mock JSON:
+          data = mockEvents;
+
+          // Option B) Fetch from a static file in /public:
+          // const response = await fetch(MOCK_API_URL);
+          // if (!response.ok) {
+          //   throw new Error(`Mock data file not found or error: ${response.status}`);
+          // }
+          // data = await response.json();
+        } else {
+          console.log(`📡 Fetching real data from: ${REAL_API_URL}`);
+          const response = await fetch(REAL_API_URL, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+          }
+          data = await response.json();
         }
 
-        const data = await response.json();
-        console.log("📡 API Response:", data);
-
-        // If data is an array, set it in state
+        // Make sure it's an array
         if (Array.isArray(data) && data.length > 0) {
           setEventData(data);
         } else {
@@ -40,7 +62,7 @@ export const useFetchEvents = () => {
     };
 
     fetchAllData();
-  }, []); // Empty dependency array → runs once
+  }, []);
 
   return { eventData, loading, error };
 };
