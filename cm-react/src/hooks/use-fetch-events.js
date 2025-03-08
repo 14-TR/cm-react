@@ -1,17 +1,24 @@
-// use-fetch-events.js
+// hooks/use-fetch-events.js
 import { useState, useEffect } from "react";
+import Dexie from "dexie";
 
-// Toggle this to switch between mock data and real data:
-const USE_MOCK = true;
+const API_URL = "http://127.0.0.1:8000/battles";
+const DB_NAME = "EventsDatabase";
+const STORE_NAME = "events";
+const CACHE_TIMESTAMP_KEY = "dexieCacheTimestamp";
+const CACHE_VALIDITY_HOURS = 6;
+const PAGE_SIZE = 5000;
 
-// If you want to fetch from an actual local file in public/ folder, you can use:
-// const MOCK_API_URL = "/mockEvents.json";
 
-// Or  import directly from a JS/JSON file in src/data
-import mockEvents from "../data/mockEvents.json";
+const db = new Dexie(DB_NAME);
 
-// API endpoint (when not using mocks):
-const REAL_API_URL = "http://127.0.0.1:8000/battles";
+db.version(1).stores({
+  [STORE_NAME]: "event_id_cnty",
+});
+
+const isCacheValid = (timestamp) => {
+  return Date.now() - timestamp < CACHE_VALIDITY_HOURS * 60 * 60 * 1000;
+};
 
 export const useFetchEvents = () => {
   const [eventData, setEventData] = useState([]);
@@ -19,49 +26,59 @@ export const useFetchEvents = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchAllData = async () => {
+    const fetchAndCacheData = async () => {
+      const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+
+      if (cachedTimestamp && isCacheValid(Number(cachedTimestamp))) {
+        console.log("📦 Loading from IndexedDB cache...");
+        const cachedEvents = await db[STORE_NAME].toArray();
+        if (cachedEvents.length > 0) {
+          setEventData(cachedEvents);
+          setLoading(false);
+          return;
+        }
+      }
+
+      console.log("🌐 Fetching fresh data...");
+      setLoading(true);
+
       try {
-        let data;
+        let allData = [];
+        let page = 1;
+        let hasMoreData = true;
 
-        if (USE_MOCK) {
-          console.log("🧪 Using mock data...");
+        while (hasMoreData) {
+          const response = await fetch(`${API_URL}?page=${page}&page_size=${PAGE_SIZE}`);
+          if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
-          // Option A) Direct import if you have a local mock JSON:
-          data = mockEvents;
+          const dataChunk = await response.json();
 
-          // Option B) Fetch from a static file in /public:
-          // const response = await fetch(MOCK_API_URL);
-          // if (!response.ok) {
-          //   throw new Error(`Mock data file not found or error: ${response.status}`);
-          // }
-          // data = await response.json();
-        } else {
-          console.log(`📡 Fetching real data from: ${REAL_API_URL}`);
-          const response = await fetch(REAL_API_URL, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          });
-          if (!response.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status}`);
+          if (dataChunk.length === 0 || dataChunk.length < PAGE_SIZE) {
+            hasMoreData = false;
+          } else {
+            page += 1;
           }
-          data = await response.json();
+
+          allData = [...allData, ...dataChunk];
+          setEventData([...allData]);
         }
 
-        // Make sure it's an array
-        if (Array.isArray(data) && data.length > 0) {
-          setEventData(data);
-        } else {
-          console.warn("⚠️ No event data received!");
-        }
+        // Cache data into IndexedDB
+        await db[STORE_NAME].clear();
+        await db[STORE_NAME].bulkPut(allData);
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+
+        console.log("✅ Data cached successfully into IndexedDB!");
+
       } catch (err) {
-        console.error("❌ Error fetching events:", err);
+        console.error("❌ Error fetching data:", err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAllData();
+    fetchAndCacheData();
   }, []);
 
   return { eventData, loading, error };

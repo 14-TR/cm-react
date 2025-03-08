@@ -1,5 +1,5 @@
 // ControlPanelSpeedDial.js
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import Box from "@mui/material/Box";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
@@ -12,12 +12,12 @@ import ElipsesIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 import CalculateIcon from "@mui/icons-material/Calculate";
 
-// Sub-panels
-import SearchAggregationPanel from "./search-aggregation-panel";
-import LayerControlPanel from "./layer-control-panel"; 
-import AnalysisControlPanel from "./analysis-control-panel"; // Placeholder example
-import CentralTendencyPanel from "./central-tendency-panel";
-import InfoPage from "./info-page"; // Placeholder example
+// Lazy load sub-panels
+const SearchAggregationPanel = lazy(() => import("./search-aggregation-panel"));
+const LayerControlPanel = lazy(() => import("./layer-control-panel"));
+const AnalysisControlPanel = lazy(() => import("./analysis-control-panel"));
+const CentralTendencyPanel = lazy(() => import("./central-tendency-panel"));
+const InfoPage = lazy(() => import("./info-page"));
 
 const headerHeight = 64;
 
