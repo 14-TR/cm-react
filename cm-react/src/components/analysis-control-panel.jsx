@@ -1,8 +1,8 @@
-// analysis-control-panel.jsx
 import React from "react";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from "recharts";
+import { Rnd } from "react-rnd";
 
 const AnalysisControlPanel = ({
   brushingEnabled,
@@ -17,28 +17,18 @@ const AnalysisControlPanel = ({
   const handleRadiusChange = (e) => setBrushingRadius(Number(e.target.value));
   const toggleChart = () => setShowChart(!showChart);
 
-  // 1) Group events by date
   let chartData = [];
   if (displayData && displayData.length > 0) {
-    // Filter only items that have an event_date
     const dateCounts = {};
-
     displayData.forEach((item) => {
-      // Expecting something like item.event_date = "2025-03-01" or "2025-03-01T12:00:00Z"
       if (item.event_date) {
-        // Extract just the YYYY-MM-DD (or handle times if you want finer granularity)
-        // For simplicity, let's just slice the date:
-        const dateStr = item.event_date.slice(0, 10); // "YYYY-MM-DD"
+        const dateStr = item.event_date.slice(0, 10);
         dateCounts[dateStr] = (dateCounts[dateStr] || 0) + 1;
       }
     });
 
-    // Convert dateCounts object into an array sorted by date
     chartData = Object.entries(dateCounts)
-      .map(([date, count]) => ({
-        date,
-        count
-      }))
+      .map(([date, count]) => ({ date, count }))
       .sort((a, b) => (a.date > b.date ? 1 : -1));
   }
 
@@ -94,16 +84,27 @@ const AnalysisControlPanel = ({
         </label>
       </div>
 
-      {/* Render the chart if toggled on and we have data */}
       {showChart && chartData.length > 0 && (
-        <div
+        
+        <Rnd
+          disableDragging={true}
+          enableResizing={{
+            top: true, right: true, bottom: true, left: true,
+            topRight: true, bottomRight: true, bottomLeft: true, topLeft: true
+          }}
+          default={{
+            width: 400,
+            height: 300,
+          }}
           style={{
-            marginTop: "16px",
-            background: "#fff",
-            padding: "8px",
-            color: "#000",
-            width: "100%",
-            height: "300px"
+            position: "absolute",
+            bottom: "5vh",
+            right: "5vw",
+            backgroundColor: "rgba(255,255,255,0.9)",
+            borderRadius: "8px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.5)",
+            padding: "10px",
+            zIndex: 1000,
           }}
         >
           <ResponsiveContainer width="100%" height="100%">
@@ -116,7 +117,8 @@ const AnalysisControlPanel = ({
               <Line type="monotone" dataKey="count" stroke="#8884d8" />
             </LineChart>
           </ResponsiveContainer>
-        </div>
+        </Rnd>
+
       )}
 
       {showChart && chartData.length === 0 && (

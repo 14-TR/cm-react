@@ -82,7 +82,7 @@ const DeckMap = () => {
           radius,
           coverage,
           upperPercentile
-          // Possibly incorporate showBattlesLayer, showExplosionsLayer, etc.
+          // add showBattlesLayer, showExplosionsLayer, etc.
         })
       : [];
 
@@ -91,7 +91,11 @@ const DeckMap = () => {
   if (error) return <div>Error loading data: {error}</div>;
 
   return (
-    <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
+    <div style={{ 
+      position: "relative", 
+      height: "100vh", 
+      width: "100vw",
+      overflow: "hidden"}}>
       {/* 
         The Speed Dial with multiple sub-panels:
         - Search & Aggregation
