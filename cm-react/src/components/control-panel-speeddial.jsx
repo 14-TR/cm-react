@@ -50,7 +50,7 @@ export default function ControlPanelSpeedDial({
   showBattlesLayer,
   setShowBattlesLayer,
   showExplosionsLayer,
-  // setShowExplosionsLayer,
+  setShowExplosionsLayer,
   showViirsLayer,
   setShowViirsLayer,
 
@@ -62,8 +62,9 @@ export default function ControlPanelSpeedDial({
   showChart,
   setShowChart,
 
-  // NEW: pass the data currently displayed on the map
-  displayData
+  // Data
+  displayData,
+  dataSource = 'time-slider' // Default value
 }) {
   const [activePanel, setActivePanel] = useState(null);
 
@@ -105,6 +106,7 @@ export default function ControlPanelSpeedDial({
           onQuerySubmit={onQuerySubmit}
           onReset={onReset}
           statsData={statsData}
+          dataSource={dataSource}
         />
       </Box>
 
@@ -130,9 +132,10 @@ export default function ControlPanelSpeedDial({
           showBattlesLayer={showBattlesLayer}
           setShowBattlesLayer={setShowBattlesLayer}
           showExplosionsLayer={showExplosionsLayer}
-          // setShowExplosionsLayer={setShowExplosionsLayer}
+          setShowExplosionsLayer={setShowExplosionsLayer}
           showViirsLayer={showViirsLayer}
           setShowViirsLayer={setShowViirsLayer}
+          dataSource={dataSource}
         />
       </Box>
 
@@ -154,6 +157,7 @@ export default function ControlPanelSpeedDial({
           displayData={displayData}
           showChart={showChart}
           setShowChart={setShowChart}
+          dataSource={dataSource}
         />
       </Box>
 
@@ -167,7 +171,10 @@ export default function ControlPanelSpeedDial({
           display: activePanel === "toggleCentralTendency" ? "block" : "none",
         }}
       >
-        <CentralTendencyPanel displayData={displayData} />
+        <CentralTendencyPanel 
+          displayData={displayData} 
+          dataSource={dataSource}
+        />
       </Box>
 
       {/* ---------- Sub-Panel: Info Page ---------- */}
