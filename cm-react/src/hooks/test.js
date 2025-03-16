@@ -11,7 +11,7 @@ const USE_MOCK = false;
 import mockEvents from "../data/mockEvents.json";
 
 // API endpoint (when not using mocks):
-const REAL_API_URL = "http://127.0.0.1:8000/battles";
+const REAL_API_URL = "http://18.218.227.30:8000/battles";
 
 export const useFetchEvents = () => {
   const [eventData, setEventData] = useState([]);

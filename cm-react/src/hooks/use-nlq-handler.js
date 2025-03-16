@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-// Adjust to match your local FastAPI server
-const NLQ_API_URL = "http://127.0.0.1:8000/nlq";
+// Adjust to match your EC2 FastAPI server
+const NLQ_API_URL = "http://18.218.227.30:8000/nlq";
 
 export const useNlqHandler = () => {
   const [nlqResults, setNlqResults] = useState([]);
