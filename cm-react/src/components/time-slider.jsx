@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Slider, Box, Typography, Button, IconButton, Tooltip } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -31,32 +31,102 @@ const TimeSlider = ({ eventData, setFilteredData }) => {
 
   // In a real scenario, minDate may be dynamic from your dataset's earliest date
   const minDate = new Date("2018-01-01");
-  const maxDate = eventData.length
-    ? new Date(
-        Math.max(
-          ...eventData.map(d => new Date(d.event_date).getTime())
-        )
-      )
-    : new Date();
+  
+  // Calculate maxDate more efficiently to prevent stack overflow with large datasets
+  const maxDate = useMemo(() => {
+    if (!eventData || eventData.length === 0) return new Date();
+    
+    // Use a loop instead of spreading a potentially huge array
+    let max = new Date(eventData[0]?.event_date || new Date()).getTime();
+    
+    // Only sample a subset of data for very large datasets
+    const step = eventData.length > 10000 ? Math.floor(eventData.length / 1000) : 1;
+    
+    for (let i = 0; i < eventData.length; i += step) {
+      if (eventData[i]?.event_date) {
+        const time = new Date(eventData[i].event_date).getTime();
+        if (!isNaN(time) && time > max) {
+          max = time;
+        }
+      }
+    }
+    
+    return new Date(max);
+  }, [eventData]);
 
   // Computed "last year" from maxDate
-  const oneYearAgo = new Date(maxDate);
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+  const oneYearAgo = useMemo(() => {
+    const date = new Date(maxDate);
+    date.setFullYear(date.getFullYear() - 1);
+    return date;
+  }, [maxDate]);
 
   // Convert [startPercent, endPercent] to actual Date
   const filterData = useCallback((startPercent, endPercent) => {
+    console.time('Time slider filtering');
+    
+    if (!eventData || eventData.length === 0) {
+      console.warn("TimeSlider: No eventData available to filter");
+      setFilteredData([]);
+      console.timeEnd('Time slider filtering');
+      return;
+    }
+
     const startTime = new Date(
       minDate.getTime() + (startPercent / 100) * (maxDate - minDate)
     );
     const endTime = new Date(
       minDate.getTime() + (endPercent / 100) * (maxDate - minDate)
     );
-    // Filter
-    const filtered = eventData.filter(({ event_date }) => {
-      const dt = new Date(event_date);
-      return dt >= startTime && dt <= endTime;
+    
+    console.log("TimeSlider filtering data:", {
+      dateRange: `${startTime.toISOString().slice(0, 10)} → ${endTime.toISOString().slice(0, 10)}`,
+      totalEvents: eventData.length
     });
+    
+    // Filter with performance optimization
+    const startTimestamp = startTime.getTime();
+    const endTimestamp = endTime.getTime();
+    
+    // For very large datasets, limit the number of filtered events
+    const maxEvents = 50000;
+    const shouldLimit = eventData.length > maxEvents;
+    let filtered = [];
+    let count = 0;
+    
+    // Process large datasets more efficiently
+    for (let i = 0; i < eventData.length; i++) {
+      const item = eventData[i];
+      if (!item.event_date) continue;
+      
+      const dt = new Date(item.event_date);
+      if (isNaN(dt.getTime())) continue;
+      
+      const timestamp = dt.getTime();
+      if (timestamp >= startTimestamp && timestamp <= endTimestamp) {
+        filtered.push(item);
+        count++;
+        
+        // If filtering too many events, sample them instead
+        if (shouldLimit && count >= maxEvents) {
+          console.warn(`TimeSlider: Limited to ${maxEvents} events out of ${eventData.length}`);
+          break;
+        }
+      }
+    }
+    
+    console.log(`TimeSlider: Filtered ${filtered.length} out of ${eventData.length} events`);
+    
+    if (filtered.length === 0 && eventData.length > 0) {
+      console.warn("TimeSlider: All events were filtered out! Check date ranges");
+      console.log("First few events:", eventData.slice(0, 3).map(e => ({ 
+        event_date: e.event_date, 
+        parsed: new Date(e.event_date).toISOString() 
+      })));
+    }
+    
     setFilteredData(filtered);
+    console.timeEnd('Time slider filtering');
   }, [eventData, minDate, maxDate, setFilteredData]);
 
   // On mount & if data loaded, do initial load once

@@ -35,16 +35,14 @@ export default function ControlPanelSpeedDial({
   onQuerySubmit,
   onReset,
   statsData,
+  nlqLoading,
+  nlqError,
 
   // For layer controls
   radius,
   setRadius,
   coverage,
   setCoverage,
-  upperPercentile,
-  setUpperPercentile,
-  lowerPercentile,
-  setLowerPercentile,
 
   // Toggling different layers
   showBattlesLayer,
@@ -64,7 +62,10 @@ export default function ControlPanelSpeedDial({
 
   // Data
   displayData,
-  dataSource = 'time-slider' // Default value
+  dataSource = 'time-slider', // Default value
+  
+  // Layer information for other components
+  layerInfo = {}
 }) {
   const [activePanel, setActivePanel] = useState(null);
 
@@ -107,6 +108,8 @@ export default function ControlPanelSpeedDial({
           onReset={onReset}
           statsData={statsData}
           dataSource={dataSource}
+          nlqLoading={nlqLoading}
+          nlqError={nlqError}
         />
       </Box>
 
@@ -125,10 +128,6 @@ export default function ControlPanelSpeedDial({
           setRadius={setRadius}
           coverage={coverage}
           setCoverage={setCoverage}
-          upperPercentile={upperPercentile}
-          setUpperPercentile={setUpperPercentile}
-          lowerPercentile={lowerPercentile}
-          setLowerPercentile={setLowerPercentile}
           showBattlesLayer={showBattlesLayer}
           setShowBattlesLayer={setShowBattlesLayer}
           showExplosionsLayer={showExplosionsLayer}
@@ -158,6 +157,7 @@ export default function ControlPanelSpeedDial({
           showChart={showChart}
           setShowChart={setShowChart}
           dataSource={dataSource}
+          layerInfo={layerInfo}
         />
       </Box>
 

@@ -13,24 +13,60 @@ const AnalysisControlPanel = ({
   setBrushingRadius,
   showChart,
   setShowChart,
-  displayData
+  displayData,
+  layerInfo = {} // Default empty object if not provided
 }) => {
   const toggleBrushing = () => setBrushingEnabled(!brushingEnabled);
   const handleRadiusChange = (e) => setBrushingRadius(Number(e.target.value));
   const toggleChart = () => setShowChart(!showChart);
 
+  // Default colors if layerInfo is not provided
+  const battleColor = layerInfo.battles?.color || "#8B0000"; // Dark red
+  const explosionColor = layerInfo.explosions?.color || "#FF8C00"; // Dark orange
+  const viirsColor = layerInfo.viirs?.color || "#228B22"; // Forest green
+  const totalColor = "#4169E1"; // Royal blue
+  
+  // Layer visibility from layer info (or default to true if not provided)
+  const showBattlesLayer = layerInfo.battles?.visible !== undefined ? layerInfo.battles.visible : true;
+  const showExplosionsLayer = layerInfo.explosions?.visible !== undefined ? layerInfo.explosions.visible : true;
+  const showViirsLayer = layerInfo.viirs?.visible !== undefined ? layerInfo.viirs.visible : true;
+
+  // Prepare chart data with separate counts for each event type
   let chartData = [];
   if (displayData && displayData.length > 0) {
     const dateCounts = {};
+    
     displayData.forEach((item) => {
       if (item.event_date) {
         const dateStr = item.event_date.slice(0, 10);
-        dateCounts[dateStr] = (dateCounts[dateStr] || 0) + 1;
+        const eventType = String(item.event_type || '').toLowerCase();
+        
+        if (!dateCounts[dateStr]) {
+          dateCounts[dateStr] = {
+            date: dateStr,
+            battles: 0,
+            explosions: 0,
+            viirs: 0,
+            total: 0
+          };
+        }
+        
+        // Increment the appropriate event type counter
+        if (eventType === 'battle' || eventType === 'battles') {
+          dateCounts[dateStr].battles += 1;
+          dateCounts[dateStr].total += 1; // Only count supported types in total
+        } else if (eventType === 'explosion' || eventType === 'explosions') {
+          dateCounts[dateStr].explosions += 1;
+          dateCounts[dateStr].total += 1; // Only count supported types in total
+        } else if (eventType === 'viirs') {
+          dateCounts[dateStr].viirs += 1;
+          dateCounts[dateStr].total += 1; // Only count supported types in total
+        }
+        // Other event types are ignored and not counted
       }
     });
 
-    chartData = Object.entries(dateCounts)
-      .map(([date, count]) => ({ date, count }))
+    chartData = Object.values(dateCounts)
       .sort((a, b) => (a.date > b.date ? 1 : -1));
   }
 
@@ -95,8 +131,8 @@ const AnalysisControlPanel = ({
             topRight: true, bottomRight: true, bottomLeft: true, topLeft: true
           }}
           default={{
-            width: 400,
-            height: 300,
+            width: 600,
+            height: 400,
           }}
           style={{
             position: "absolute",
@@ -125,7 +161,7 @@ const AnalysisControlPanel = ({
             </IconButton>
             
             <div style={{ width: "100%", height: "100%", paddingTop: "10px" }}>
-              <h4 style={{ textAlign: "center", margin: "0 0 10px 0" }}>Event Time Series</h4>
+              <h4 style={{ textAlign: "center", margin: "0 0 10px 0" }}>Event Time Series by Type</h4>
               <ResponsiveContainer width="100%" height="85%">
                 <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 25, left: 20 }}>
                   <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -143,14 +179,47 @@ const AnalysisControlPanel = ({
                   </YAxis>
                   <Tooltip />
                   <Legend verticalAlign="top" />
+                  {showBattlesLayer && (
+                    <Line 
+                      type="monotone" 
+                      dataKey="battles" 
+                      stroke={battleColor}
+                      name="Battles"
+                      strokeWidth={2}
+                      dot={{ r: 3 }}
+                      activeDot={{ r: 5 }}
+                    />
+                  )}
+                  {showExplosionsLayer && (
+                    <Line 
+                      type="monotone" 
+                      dataKey="explosions" 
+                      stroke={explosionColor}
+                      name="Explosions"
+                      strokeWidth={2}
+                      dot={{ r: 3 }}
+                      activeDot={{ r: 5 }}
+                    />
+                  )}
+                  {showViirsLayer && (
+                    <Line 
+                      type="monotone" 
+                      dataKey="viirs" 
+                      stroke={viirsColor}
+                      name="VIIRS"
+                      strokeWidth={2}
+                      dot={{ r: 3 }}
+                      activeDot={{ r: 5 }}
+                    />
+                  )}
                   <Line 
                     type="monotone" 
-                    dataKey="count" 
-                    stroke="#8884d8" 
-                    name="Event Count"
-                    strokeWidth={2}
-                    dot={{ r: 3 }}
-                    activeDot={{ r: 5 }}
+                    dataKey="total" 
+                    stroke={totalColor}
+                    name="Total (Battles+Explosions+VIIRS)"
+                    strokeDasharray="3 3"
+                    strokeWidth={1}
+                    dot={false}
                   />
                 </LineChart>
               </ResponsiveContainer>

@@ -10,11 +10,7 @@ const LayerControlPanel = ({
   setRadius,
   coverage,
   setCoverage,
-  upperPercentile,
-  setUpperPercentile,
-  lowerPercentile,
-  setLowerPercentile,
-
+  
   showBattlesLayer,
   setShowBattlesLayer,
   showExplosionsLayer,
@@ -25,8 +21,6 @@ const LayerControlPanel = ({
   // Example slider handlers
   const handleRadiusChange = (e) => setRadius(Number(e.target.value));
   const handleCoverageChange = (e) => setCoverage(Number(e.target.value));
-  const handleUpperChange = (e) => setUpperPercentile(Number(e.target.value));
-  const handleLowerChange = (e) => setLowerPercentile(Number(e.target.value));
 
   // Example toggles for layers
   const toggleBattles = () => setShowBattlesLayer(!showBattlesLayer);
@@ -70,32 +64,6 @@ const LayerControlPanel = ({
           onChange={handleCoverageChange}
         />
         <span> {coverage}</span>
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <label>Upper %:</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="5"
-          value={upperPercentile}
-          onChange={handleUpperChange}
-        />
-        <span> {upperPercentile}</span>
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <label>Lower %:</label>
-        <input
-          type="range"
-          min="0"
-          max="95"
-          step="5"
-          value={lowerPercentile}
-          onChange={handleLowerChange}
-        />
-        <span> {lowerPercentile}</span>
       </div>
 
       <hr style={{ margin: "10px 0" }} />

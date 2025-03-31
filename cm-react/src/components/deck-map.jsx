@@ -20,13 +20,11 @@ const DeckMap = () => {
   // 1) Layer controls
   const [radius, setRadius] = useState(1000);
   const [coverage, setCoverage] = useState(1.0);
-  const [upperPercentile, setUpperPercentile] = useState(100);
-  const [lowerPercentile, setLowerPercentile] = useState(0);
 
   // 2) Toggles
   const [showBattlesLayer, setShowBattlesLayer] = useState(true);
-  const [showExplosionsLayer, setShowExplosionsLayer] = useState(false);
-  const [showViirsLayer, setShowViirsLayer] = useState(false);
+  const [showExplosionsLayer, setShowExplosionsLayer] = useState(true);
+  const [showViirsLayer, setShowViirsLayer] = useState(true);
 
   // 3) Analysis toggles
   const [brushingEnabled, setBrushingEnabled] = useState(false);
@@ -35,7 +33,7 @@ const DeckMap = () => {
 
   // 4) Data fetching & NLQ
   const { eventData, loading, error } = useFetchEvents();
-  const { nlqResults, fetchNlqResults, nlqLoading, nlqError } = useNlqHandler();
+  const { nlqResults, setNlqResults, fetchNlqResults, nlqLoading, nlqError } = useNlqHandler();
 
   // 5) The data the map will display
   const [displayData, setDisplayData] = useState([]);
@@ -47,17 +45,20 @@ const DeckMap = () => {
   // 7) Active data - the data that should be used by all components
   const [activeData, setActiveData] = useState([]);
 
-  // 8) deck.gl ref
+  // 8) Layer information for charts and other components
+  const [layerInfo, setLayerInfo] = useState({});
+
+  // 9) deck.gl ref
   const deckRef = useRef(null);
 
-  // 9) Tooltip state
+  // 10) Tooltip state
   const [hoverInfo, setHoverInfo] = useState(null);
   const [clickInfo, setClickInfo] = useState(null);
   
-  // 10) Mouse position for brushing
+  // 11) Mouse position for brushing
   const [mousePosition, setMousePosition] = useState(null);
   
-  // 11) Data source tracking
+  // 12) Data source tracking
   const [dataSource, setDataSource] = useState('time-slider');
 
   // Cleanup function to handle unmounting
@@ -83,16 +84,23 @@ const DeckMap = () => {
 
   // Update active data whenever the data source changes
   useEffect(() => {
+    console.time('Update active data');
+    
     if (dataSource === 'nlq' && nlqResults.length > 0) {
       // NLQ results take precedence
       setActiveData(nlqResults);
+      console.log("Setting activeData from nlqResults:", nlqResults.length);
     } else if (dataSource === 'brushing' && brushedData.length > 0) {
       // Brushing data is second priority
       setActiveData(brushedData);
+      console.log("Setting activeData from brushedData:", brushedData.length);
     } else {
       // Time slider data is the default
       setActiveData(displayData);
+      console.log("Setting activeData from displayData:", displayData.length);
     }
+    
+    console.timeEnd('Update active data');
   }, [dataSource, displayData, brushedData, nlqResults]);
 
   // If we have NLQ data, override the time-filtered data
@@ -122,6 +130,7 @@ const DeckMap = () => {
     // On reset, go back to the data the slider is currently controlling
     setDataSource('time-slider');
     setStatsData([]);
+    setNlqResults([]); // Also clear NLQ results for complete reset
     // If you'd like to fully re-init the slider on reset,
     // you can add an additional "key" or prop to the slider
     // or call a function from TimeSlider
@@ -180,30 +189,35 @@ const DeckMap = () => {
   const brushingExtension = new BrushingExtension();
 
   // Build deck.gl layers
-  const layers = createLayers({
+  const layerResult = createLayers({
     eventData: activeData,
     radius,
     coverage,
-    upperPercentile,
-    lowerPercentile,
     showBattlesLayer,
     showExplosionsLayer,
     showViirsLayer,
     onHover,
-    onClick
+    onClick,
+    brushingEnabled,
+    brushingRadius,
+    brushingExtension,
+    mousePosition
   });
   
-  // Apply brushing to layers if enabled
-  if (brushingEnabled && mousePosition) {
-    layers.forEach(layer => {
-      if (layer.id.includes('layer')) {
-        layer.props.brushingRadius = brushingRadius;
-        layer.props.brushingEnabled = true;
-        layer.props.extensions = [brushingExtension];
-        layer.props.brushingTarget = 'source';
-      }
-    });
-  }
+  const layers = layerResult.layers;
+  
+  // Update layer info for other components to use
+  useEffect(() => {
+    setLayerInfo(layerResult.layerInfo);
+  }, [
+    // Use stable dependencies instead of the layers array which changes every render
+    activeData, 
+    showBattlesLayer, 
+    showExplosionsLayer, 
+    showViirsLayer,
+    radius,
+    coverage
+  ]);
 
   if (loading) return <div>Loading data...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -215,14 +229,12 @@ const DeckMap = () => {
         onQuerySubmit={fetchNlqResults}
         onReset={handleReset}
         statsData={statsData}
+        nlqLoading={nlqLoading}
+        nlqError={nlqError}
         radius={radius}
         setRadius={setRadius}
         coverage={coverage}
         setCoverage={setCoverage}
-        upperPercentile={upperPercentile}
-        setUpperPercentile={setUpperPercentile}
-        lowerPercentile={lowerPercentile}
-        setLowerPercentile={setLowerPercentile}
         showBattlesLayer={showBattlesLayer}
         setShowBattlesLayer={setShowBattlesLayer}
         showExplosionsLayer={showExplosionsLayer}
@@ -237,6 +249,7 @@ const DeckMap = () => {
         setShowChart={setShowChart}
         displayData={activeData}
         dataSource={dataSource}
+        layerInfo={layerInfo}
       />
 
       {/* Time Slider is the ONLY driver of initial load & date filtering */}

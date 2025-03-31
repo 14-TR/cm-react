@@ -11,7 +11,9 @@ import NlqSearchBar from "./nlq-search-bar";
 const SearchAggregationPanel = ({
   onQuerySubmit,
   onReset,
-  statsData
+  statsData,
+  nlqLoading = false,
+  nlqError = null
 }) => {
   // Some minimal styling
   const panelStyles = {
@@ -46,7 +48,11 @@ const SearchAggregationPanel = ({
     <div style={panelStyles}>
       <h3>Search & Aggregation</h3>
       {/* The NLQ Search Bar */}
-      <NlqSearchBar onQuerySubmit={onQuerySubmit} />
+      <NlqSearchBar 
+        onQuerySubmit={onQuerySubmit} 
+        loading={nlqLoading}
+        error={nlqError}
+      />
 
       {/* The reset button */}
       <button
